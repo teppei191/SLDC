@@ -166,7 +166,7 @@ export function AssessmentPage({ assessmentState, updateAssessmentState }: Asses
               <div className="space-y-3">
                 <Progress value={progress} className="h-3" />
                 <p className="text-gray-600 text-sm">
-                  質問 {currentQuestionIndex + 1} / {totalQuestions}
+                  Question {currentQuestionIndex + 1} / {totalQuestions}
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ export function AssessmentPage({ assessmentState, updateAssessmentState }: Asses
                       })()}
                     </div>
                     <span className="text-gray-500 text-sm">
-                      質問 {currentQuestionIndex + 1} / {totalQuestions}
+                      Question {currentQuestionIndex + 1} / {totalQuestions}
                     </span>
                   </div>
 

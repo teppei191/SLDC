@@ -139,70 +139,79 @@ export function CostImpactAnalysis({ companyInfo, painPoint, timeImpact, current
       <CardHeader className="bg-gradient-to-r from-red-50 to-orange-50 border-b border-red-200">
         <CardTitle className="text-3xl font-bold flex items-center text-slate-800">
           <TrendingDown className="h-10 w-10 mr-4 text-red-600" />
-          Cost Impact Analysis
+          Financial Impact Analysis
         </CardTitle>
-        <p className="text-lg text-slate-600 mt-2">2-Year Financial Impact: Without vs With AI Agentic Tools</p>
+        <p className="text-lg text-slate-600 mt-2">2-Year Revenue Impact: Current State vs AI-Optimized SDLC</p>
       </CardHeader>
       <CardContent className="p-8">
         {/* Line Chart showing progression over time */}
         <div className="mb-8">
-          <div className="h-96 mb-6 bg-gradient-to-br from-slate-50 to-white rounded-xl p-6 border border-slate-200">
+          <div className="h-96 mb-6 bg-gradient-to-br from-slate-50 to-white rounded-xl p-8 border border-slate-200 shadow-sm">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={projectionData} margin={{ top: 20, right: 30, left: 60, bottom: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <LineChart data={projectionData} margin={{ top: 30, right: 40, left: 80, bottom: 40 }}>
+                <CartesianGrid strokeDasharray="2 2" stroke="#e2e8f0" strokeWidth={0.8} />
                 <XAxis
                   dataKey="period"
-                  tick={{ fontSize: 14, fill: "#64748b" }}
-                  axisLine={{ stroke: "#cbd5e1" }}
-                  tickLine={{ stroke: "#cbd5e1" }}
+                  tick={{ fontSize: 13, fill: "#64748b", fontWeight: "500" }}
+                  axisLine={{ stroke: "#94a3b8", strokeWidth: 1.5 }}
+                  tickLine={{ stroke: "#94a3b8" }}
                 />
                 <YAxis
                   domain={[0, "dataMax + 5"]}
                   label={{
-                    value: "Cumulative Loss ($M)",
+                    value: "Annual Revenue Impact ($M)",
                     angle: -90,
                     position: "insideLeft",
-                    style: { textAnchor: "middle", fill: "#64748b", fontSize: "14px" },
+                    style: { textAnchor: "middle", fill: "#64748b", fontSize: "14px", fontWeight: "600" },
                   }}
-                  tick={{ fontSize: 14, fill: "#64748b" }}
-                  axisLine={{ stroke: "#cbd5e1" }}
-                  tickLine={{ stroke: "#cbd5e1" }}
+                  tick={{ fontSize: 13, fill: "#64748b", fontWeight: "500" }}
+                  axisLine={{ stroke: "#94a3b8", strokeWidth: 1.5 }}
+                  tickLine={{ stroke: "#94a3b8" }}
+                  tickFormatter={(value) => `$${value}M`}
                 />
                 <Tooltip content={<CustomTooltip />} />
-                <Legend wrapperStyle={{ paddingTop: "20px", fontSize: "14px" }} iconType="line" />
+                <Legend 
+                  wrapperStyle={{ 
+                    paddingTop: "24px", 
+                    fontSize: "13px", 
+                    fontWeight: "600",
+                    color: "#374151"
+                  }} 
+                  iconType="line" 
+                />
 
                 {/* Without AI Tools Line - Red */}
                 <Line
                   type="monotone"
                   dataKey="withoutAI"
-                  stroke="#ef4444"
-                  strokeWidth={4}
-                  dot={{ fill: "#ef4444", strokeWidth: 2, r: 6 }}
-                  activeDot={{ r: 8, stroke: "#ef4444", strokeWidth: 2 }}
-                  name="Without AI Agentic Tools"
+                  stroke="#dc2626"
+                  strokeWidth={3.5}
+                  dot={{ fill: "#dc2626", strokeWidth: 2, r: 5, stroke: "#ffffff" }}
+                  activeDot={{ r: 7, stroke: "#dc2626", strokeWidth: 3, fill: "#ffffff" }}
+                  name="Current State"
                 />
 
                 {/* With AI Tools Line - Green */}
                 <Line
                   type="monotone"
                   dataKey="withAI"
-                  stroke="#10b981"
-                  strokeWidth={4}
-                  dot={{ fill: "#10b981", strokeWidth: 2, r: 6 }}
-                  activeDot={{ r: 8, stroke: "#10b981", strokeWidth: 2 }}
-                  name="With AI Agentic Tools"
+                  stroke="#059669"
+                  strokeWidth={3.5}
+                  dot={{ fill: "#059669", strokeWidth: 2, r: 5, stroke: "#ffffff" }}
+                  activeDot={{ r: 7, stroke: "#059669", strokeWidth: 3, fill: "#ffffff" }}
+                  name="AI-Optimized"
                 />
 
                 {/* Savings Line - Blue (dashed) */}
                 <Line
                   type="monotone"
                   dataKey="savings"
-                  stroke="#3b82f6"
-                  strokeWidth={4}
-                  strokeDasharray="8 8"
-                  dot={{ fill: "#3b82f6", strokeWidth: 2, r: 6 }}
-                  activeDot={{ r: 8, stroke: "#3b82f6", strokeWidth: 2 }}
-                  name="Total Savings"
+                  stroke="#374151"
+                  strokeWidth={3}
+                  strokeDasharray="6 4"
+                  dot={{ fill: "#374151", strokeWidth: 2, r: 4, stroke: "#ffffff" }}
+                  activeDot={{ r: 6, stroke: "#374151", strokeWidth: 3, fill: "#ffffff" }}
+                  name="Efficiency Gap"
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -213,28 +222,28 @@ export function CostImpactAnalysis({ companyInfo, painPoint, timeImpact, current
             <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 text-center border-2 border-red-200 shadow-lg">
               <div className="flex items-center justify-center mb-3">
                 <TrendingDown className="h-6 w-6 text-red-600 mr-2" />
-                <div className="text-sm font-bold text-red-700">Without AI Tools</div>
+                <div className="text-sm font-bold text-red-700">Current State</div>
               </div>
               <div className="text-4xl font-black text-red-600 mb-2">${projectionData[2]?.withoutAI || 0}M</div>
-              <div className="text-xs text-red-600 font-medium">2-Year Cumulative Loss</div>
+              <div className="text-xs text-red-600 font-medium">2-Year Revenue Impact</div>
             </div>
 
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center border-2 border-green-200 shadow-lg">
               <div className="flex items-center justify-center mb-3">
                 <TrendingUp className="h-6 w-6 text-green-600 mr-2" />
-                <div className="text-sm font-bold text-green-700">With AI Tools</div>
+                <div className="text-sm font-bold text-green-700">AI-Optimized</div>
               </div>
               <div className="text-4xl font-black text-green-600 mb-2">${projectionData[2]?.withAI || 0}M</div>
-              <div className="text-xs text-green-600 font-medium">2-Year Cumulative Loss</div>
+              <div className="text-xs text-green-600 font-medium">2-Year Revenue Impact</div>
             </div>
 
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center border-2 border-blue-200 shadow-lg">
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 text-center border-2 border-gray-300 shadow-lg">
               <div className="flex items-center justify-center mb-3">
-                <TrendingUp className="h-6 w-6 text-blue-600 mr-2" />
-                <div className="text-sm font-bold text-blue-700">Total Savings</div>
+                <TrendingUp className="h-6 w-6 text-gray-700 mr-2" />
+                <div className="text-sm font-bold text-gray-700">Efficiency Gap</div>
               </div>
-              <div className="text-4xl font-black text-blue-600 mb-2">${totalSavings}M</div>
-              <div className="text-xs text-blue-600 font-medium">Gap Between Approaches</div>
+              <div className="text-4xl font-black text-gray-700 mb-2">${totalSavings}M</div>
+              <div className="text-xs text-gray-700 font-medium">Revenue Optimization Potential</div>
             </div>
           </div>
 
@@ -242,12 +251,12 @@ export function CostImpactAnalysis({ companyInfo, painPoint, timeImpact, current
           <div className="bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl p-6 text-white text-center shadow-xl">
             <div className="flex items-center justify-center mb-3">
               <TrendingUp className="h-8 w-8 mr-3" />
-              <span className="text-2xl font-bold">ROI Projection</span>
+              <span className="text-2xl font-bold">ROI Analysis</span>
             </div>
             <div className="text-5xl font-black mb-2">
               {totalSavings > 0 ? Math.round((totalSavings * 1000000) / 50000) : 0}%
             </div>
-            <div className="text-lg opacity-90">Return on $50K AI investment over 2 years</div>
+            <div className="text-lg opacity-90">Return on $50K AI implementation over 2 years</div>
           </div>
         </div>
 
