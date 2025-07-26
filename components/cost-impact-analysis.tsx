@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts"
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Area, ComposedChart, ReferenceLine } from "recharts"
 import { TrendingDown, TrendingUp, Building2, DollarSign, Factory } from "lucide-react"
 import type { CompanyInfo } from "@/app/page"
 
@@ -148,7 +148,13 @@ export function CostImpactAnalysis({ companyInfo, painPoint, timeImpact, current
         <div className="mb-8">
           <div className="h-96 mb-6 bg-gradient-to-br from-slate-50 to-white rounded-xl p-8 border border-slate-200 shadow-sm">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={projectionData} margin={{ top: 30, right: 40, left: 80, bottom: 40 }}>
+              <ComposedChart data={projectionData} margin={{ top: 30, right: 40, left: 80, bottom: 40 }}>
+                <defs>
+                  <linearGradient id="gapGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#9ca3af" stopOpacity={0.3}/>
+                    <stop offset="100%" stopColor="#6b7280" stopOpacity={0.1}/>
+                  </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="2 2" stroke="#e2e8f0" strokeWidth={0.8} />
                 <XAxis
                   dataKey="period"
@@ -202,18 +208,22 @@ export function CostImpactAnalysis({ companyInfo, painPoint, timeImpact, current
                   name="AI-Optimized"
                 />
 
-                {/* Savings Line - Blue (dashed) */}
-                <Line
+                {/* Grey area representing the gap between lines */}
+                <Area
                   type="monotone"
-                  dataKey="savings"
-                  stroke="#374151"
-                  strokeWidth={3}
-                  strokeDasharray="6 4"
-                  dot={{ fill: "#374151", strokeWidth: 2, r: 4, stroke: "#ffffff" }}
-                  activeDot={{ r: 6, stroke: "#374151", strokeWidth: 3, fill: "#ffffff" }}
-                  name="Efficiency Gap"
+                  dataKey="withoutAI"
+                  stroke="none"
+                  fill="url(#gapGradient)"
+                  fillOpacity={0.4}
                 />
-              </LineChart>
+                <Area
+                  type="monotone"
+                  dataKey="withAI"
+                  stroke="none"
+                  fill="#ffffff"
+                  fillOpacity={1}
+                />
+              </ComposedChart>
             </ResponsiveContainer>
           </div>
 
@@ -243,7 +253,7 @@ export function CostImpactAnalysis({ companyInfo, painPoint, timeImpact, current
                 <div className="text-sm font-bold text-gray-700">Efficiency Gap</div>
               </div>
               <div className="text-4xl font-black text-gray-700 mb-2">${totalSavings}M</div>
-              <div className="text-xs text-gray-700 font-medium">Revenue Optimization Potential</div>
+              <div className="text-xs text-gray-700 font-medium">Shown as grey area in chart</div>
             </div>
           </div>
 
