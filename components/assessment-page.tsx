@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Check, ClipboardList, Search, Code, TestTube
 import { Header } from "./header"
 import { useLanguage } from "./language-provider"
 import type { AssessmentState } from "@/app/page"
-import { questions } from "@/lib/questions"
+import { questions } from "@/data/questions"
 
 interface AssessmentPageProps {
   assessmentState: AssessmentState
@@ -110,7 +110,7 @@ export function AssessmentPage({ assessmentState, updateAssessmentState }: Asses
     // Calculate percentages for all stages
     Object.keys(stageScores).forEach((stage) => {
       const stageData = stageScores[stage]
-      stageData.percentage = stageData.count > 0 ? Math.round((stageData.total / (stageData.count * 5)) * 100) : 0
+      stageData.percentage = stageData.count > 0 ? Math.round((stageData.total / (stageData.count * 4)) * 100) : 0
     })
 
     // Calculate overall score from all 6 stages
